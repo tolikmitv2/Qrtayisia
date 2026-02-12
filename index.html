@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Твой единственный выбор</title>
+    <style>
+        body { font-family: sans-serif; text-align: center; padding-top: 50px; background: #f0f0f0; }
+        .container { max-width: 400px; margin: 0 auto; background: white; padding: 20px; border-radius: 15px; shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        button { padding: 15px 30px; margin: 10px; font-size: 18px; cursor: pointer; border: none; border-radius: 5px; transition: 0.3s; }
+        .btn-1 { background: #ff4757; color: white; }
+        .btn-2 { background: #2ed573; color: white; }
+        .hidden { display: none; }
+        #message { font-weight: bold; color: #555; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div id="quiz-area">
+        <h2>Выбери один из вариантов</h2>
+        <p>Интересно,что же выберешь(если что то мне просто нечего делать(</p>
+        <button class="btn-1" onclick="makeChoice('option1', 'https://www.youtube.com/watch?v=4Br7QbZCSpo')">Вариант 1</button>
+        <button class="btn-2" onclick="makeChoice('option2', 'https://www.youtube.com/watch?v=Bb_zObUp930')">Вариант 2</button>
+    </div>
+
+    <div id="already-done" class="hidden">
+        <h2>Упс!</h2>
+        <p id="message">Твой выбор уже был сделан. Пути назад нет😋</p>
+    </div>
+</div>
+
+<script>
+    // Проверяем при загрузке, делал ли человек выбор
+    window.onload = function() {
+        if (localStorage.getItem('myProjectChoice')) {
+            showLockout();
+        }
+    };
+
+    function makeChoice(choiceName, url) {
+        // Сохраняем информацию о выборе
+        localStorage.setItem('myProjectChoice', choiceName);
+        
+        // Переходим по ссылке
+        window.location.href = url;
+    }
+
+    function showLockout() {
+        document.getElementById('quiz-area').classList.add('hidden');
+        document.getElementById('already-done').classList.remove('hidden');
+    }
+</script>
+
+</body>
+</html>
