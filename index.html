@@ -31,26 +31,41 @@
 </div>
 
 <script>
-    // Проверяем при загрузке, делал ли человек выбор
-    window.onload = function() {
+    // Функция проверки
+    function checkChoice() {
         if (localStorage.getItem('myProjectChoice')) {
             showLockout();
         }
-    };
+    }
+
+    // Это событие срабатывает ВСЕГДА: и при первой загрузке, 
+    // и когда человек нажал кнопку "Назад"
+    window.addEventListener('pageshow', function(event) {
+        checkChoice();
+    });
 
     function makeChoice(choiceName, url) {
-        // Сохраняем информацию о выборе
+        // 1. Сначала записываем выбор
         localStorage.setItem('myProjectChoice', choiceName);
         
-        // Переходим по ссылке
-        window.location.href = url;
+        // 2. Делаем небольшую задержку перед переходом (буквально 50мс),
+        // чтобы браузер точно успел сохранить данные в память
+        setTimeout(function() {
+            window.location.href = url;
+        }, 50);
     }
 
     function showLockout() {
-        document.getElementById('quiz-area').classList.add('hidden');
-        document.getElementById('already-done').classList.remove('hidden');
+        const quizArea = document.getElementById('quiz-area');
+        const alreadyDone = document.getElementById('already-done');
+        
+        if (quizArea && alreadyDone) {
+            quizArea.classList.add('hidden');
+            alreadyDone.classList.remove('hidden');
+        }
     }
 </script>
 
 </body>
+
 </html>
